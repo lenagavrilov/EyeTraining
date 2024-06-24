@@ -20,17 +20,21 @@ type
     pnlTimer: TPanel;
     Timer1: TTimer;
     lblTimer: TLabel;
+    trackSpeed: TTrackBar;
+    lblSpeed: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnStartClick(Sender: TObject);
     procedure btnStopClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Timer1Timer(Sender: TObject);
+    procedure trackSpeedTracking(Sender: TObject);
   private
     bMooving: Boolean;
     { Private declarations }
     fDirection: Integer;
     procedure moveBall(var currPoint: integer);
     procedure changeDirection;
+    procedure setSpeed;
   public
     { Public declarations }
   end;
@@ -93,8 +97,7 @@ procedure Tfrm_Training.FormCreate(Sender: TObject);
 begin
    sh_circle.Left := line.Left - sh_circle.Height div 2;
    sh_circle.Top := line.Top - sh_Circle.Height  div 2;
-   fDirection := 2;
-
+   setSpeed;
 end;
 
 procedure Tfrm_Training.moveBall(var currPoint: integer);
@@ -103,6 +106,11 @@ begin
   sh_circle.Left := currPoint;
   Application.ProcessMessages;
   sleep(1)
+end;
+
+procedure Tfrm_Training.setSpeed;
+begin
+   lblSpeed.Caption := 'Speed: ' + IntToStr(trackSpeed.Position);
 end;
 
 procedure Tfrm_Training.Timer1Timer(Sender: TObject);
@@ -114,6 +122,12 @@ begin
     btnStop.Click;
 
 
+end;
+
+procedure Tfrm_Training.trackSpeedTracking(Sender: TObject);
+begin
+   setSpeed;
+   fDirection := trackSpeed.Position;
 end;
 
 end.

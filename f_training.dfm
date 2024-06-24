@@ -23,8 +23,8 @@ object frm_Training: Tfrm_Training
     ActivePage = ts_Ex1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 443
-    ExplicitHeight = 374
+    ExplicitWidth = 548
+    ExplicitHeight = 396
     object ts_Ex1: TTabSheet
       AlignWithMargins = True
       Caption = 'EX_1'
@@ -42,10 +42,11 @@ object frm_Training: Tfrm_Training
         AlignWithMargins = True
         Left = 15
         Top = 183
-        Width = 509
+        Width = 505
         Height = 2
         Anchors = [akLeft, akTop, akRight, akBottom]
         Brush.Color = clBackground
+        ExplicitWidth = 509
       end
     end
   end
@@ -58,8 +59,8 @@ object frm_Training: Tfrm_Training
     Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 1
-    ExplicitTop = 374
-    ExplicitWidth = 628
+    ExplicitTop = 482
+    ExplicitWidth = 733
     object btnStart: TButton
       Left = 7
       Top = 6
@@ -88,9 +89,28 @@ object frm_Training: Tfrm_Training
     Caption = 'pnlSettings'
     ShowCaption = False
     TabOrder = 2
-    ExplicitLeft = 376
-    ExplicitTop = 96
-    ExplicitHeight = 41
+    object lblSpeed: TLabel
+      Left = 102
+      Top = 24
+      Width = 38
+      Height = 15
+      Caption = 'Speed: '
+    end
+    object trackSpeed: TTrackBar
+      Left = 110
+      Top = 45
+      Width = 45
+      Height = 150
+      Max = 5
+      Min = 1
+      Orientation = trVertical
+      PageSize = 1
+      Position = 3
+      TabOrder = 0
+      ThumbLength = 10
+      TickMarks = tmTopLeft
+      OnTracking = trackSpeedTracking
+    end
   end
   object pnlTimer: TPanel
     Left = 0
@@ -101,6 +121,8 @@ object frm_Training: Tfrm_Training
     Caption = 'pnlTimer'
     ShowCaption = False
     TabOrder = 3
+    ExplicitTop = 396
+    ExplicitWidth = 733
     object lblTimer: TLabel
       Left = 288
       Top = -1
