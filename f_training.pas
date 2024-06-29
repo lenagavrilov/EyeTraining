@@ -22,19 +22,24 @@ type
     lblTimer: TLabel;
     trackSpeed: TTrackBar;
     lblSpeed: TLabel;
+    btnReset: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnStartClick(Sender: TObject);
     procedure btnStopClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Timer1Timer(Sender: TObject);
     procedure trackSpeedTracking(Sender: TObject);
+    procedure btnResetClick(Sender: TObject);
   private
     bMooving: Boolean;
+    startPoint, endPoint, nowPoint: Integer;
+
     { Private declarations }
     fDirection: Integer;
-    procedure moveBall(var currPoint: integer);
+    procedure moveBall(var nowPoint: integer);
     procedure changeDirection;
     procedure setSpeed;
+    procedure resetControls;
   public
     { Public declarations }
   end;
@@ -46,14 +51,16 @@ implementation
 
 {$R *.dfm}
 
-procedure Tfrm_Training.btnStartClick(Sender: TObject);
-var
-  startPoint, endPoint, nowPoint: Integer;
+procedure Tfrm_Training.btnResetClick(Sender: TObject);
+begin
+  resetControls;
+end;
 
+procedure Tfrm_Training.btnStartClick(Sender: TObject);
 begin
   Timer1.Enabled := True;
   startPoint := line.Left;
-  endPoint := line.Left + line.Width;
+  endPoint := line.Left + line.Width - sh_circle.Width div 2;
   nowPoint := startPoint;
 
   bMooving := True;
@@ -61,13 +68,17 @@ begin
   while bMooving do
     begin
 
-      while nowPoint < EndPoint do
-       moveBall(nowPoint);
+      repeat
+        moveBall(nowPoint)
+      until nowPoint = EndPoint;
+
+
 
       changeDirection;
 
-      while nowPoint > StartPoint do
-       moveBall(nowPoint);
+      repeat
+        moveBall(nowPoint)
+      until nowPoint = startPoint;
 
       changeDirection;
 
@@ -95,22 +106,37 @@ end;
 
 procedure Tfrm_Training.FormCreate(Sender: TObject);
 begin
-   sh_circle.Left := line.Left - sh_circle.Height div 2;
-   sh_circle.Top := line.Top - sh_Circle.Height  div 2;
-   setSpeed;
+  resetControls;
 end;
 
-procedure Tfrm_Training.moveBall(var currPoint: integer);
+procedure Tfrm_Training.moveBall(var nowPoint: integer);
 begin
-  currPoint := currPoint + fDirection;
-  sh_circle.Left := currPoint;
+  nowPoint := nowPoint + fDirection;
+  if nowPoint > endPoint then
+    nowPoint := endPoint
+  else
+    if nowPoint < startPoint then
+      nowPoint := startPoint;
+
+  sh_circle.Left := nowPoint;
   Application.ProcessMessages;
   sleep(1)
+end;
+
+procedure Tfrm_Training.resetControls;
+begin
+  bMooving := False;
+  sh_circle.Left := line.Left - sh_circle.Height div 2;
+  sh_circle.Top := line.Top - sh_Circle.Height  div 2;
+  setSpeed;
+
+  //Set timer
 end;
 
 procedure Tfrm_Training.setSpeed;
 begin
    lblSpeed.Caption := 'Speed: ' + IntToStr(trackSpeed.Position);
+   fDirection := trackSpeed.Position;
 end;
 
 procedure Tfrm_Training.Timer1Timer(Sender: TObject);
@@ -127,7 +153,6 @@ end;
 procedure Tfrm_Training.trackSpeedTracking(Sender: TObject);
 begin
    setSpeed;
-   fDirection := trackSpeed.Position;
 end;
 
 end.

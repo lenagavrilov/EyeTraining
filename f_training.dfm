@@ -42,7 +42,7 @@ object frm_Training: Tfrm_Training
         AlignWithMargins = True
         Left = 15
         Top = 183
-        Width = 505
+        Width = 503
         Height = 2
         Anchors = [akLeft, akTop, akRight, akBottom]
         Brush.Color = clBackground
@@ -79,6 +79,15 @@ object frm_Training: Tfrm_Training
       TabOrder = 1
       OnClick = btnStopClick
     end
+    object btnReset: TButton
+      Left = 231
+      Top = 24
+      Width = 51
+      Height = 25
+      Caption = 'RESET'
+      TabOrder = 2
+      OnClick = btnResetClick
+    end
   end
   object pnlSettings: TPanel
     Left = 550
@@ -89,6 +98,8 @@ object frm_Training: Tfrm_Training
     Caption = 'pnlSettings'
     ShowCaption = False
     TabOrder = 2
+    ExplicitLeft = 548
+    ExplicitHeight = 396
     object lblSpeed: TLabel
       Left = 102
       Top = 24
@@ -109,6 +120,7 @@ object frm_Training: Tfrm_Training
       TabOrder = 0
       ThumbLength = 10
       TickMarks = tmTopLeft
+      StyleElements = [seFont, seBorder]
       OnTracking = trackSpeedTracking
     end
   end
